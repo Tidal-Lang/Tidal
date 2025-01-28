@@ -32,21 +32,24 @@ The Sample Code Along with the Basic Syntax Can be Found in the [Code Examples](
 
 ### Dependencies
 - Rust
-- Cargo Toolchain
+- Cargo Toolchain (For Windows, Linux, and MacOS)
 
-### Compile
-For Unix systems:
+Install all dependencies with these commands:
 ```bash
-cargo clean
-cargo run --features unix
-cargo build --release --features unix
+chmod +x scripts/install.sh
+./scripts/install.sh
 ```
 
-For Windows Systems:
+### Compile
+For all platforms (from Linux):
 ```bash
-cargo clean
-cargo run
-cargo build --release
+chmod +x scripts/build-all.sh
+./scripts/build-all.sh
+```
+
+**Note:** Cross-compilation for macOS requires building on macOS directly due to SDK requirements. To Build Anyway, Use the Following Command:
+```bash
+BUILD_MACOS=true ./scripts/build-all.sh
 ```
 
 ### Run

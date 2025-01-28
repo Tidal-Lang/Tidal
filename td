@@ -1,1 +1,1 @@
-./target/release/td
+target/x86_64-unknown-linux-gnu/release/td
