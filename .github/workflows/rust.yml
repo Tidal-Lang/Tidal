@@ -11,14 +11,33 @@ env:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            features: --features unix
+          - os: windows-latest
+            features: --features windows
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Install Windows Dependencies
+      if: matrix.os == 'windows-latest'
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: mingw64
+        update: true
+        install: mingw-w64-x86_64-gcc
+    
     - name: Clean
       run: cargo clean
+      
     - name: Build
-      run: cargo build --verbose --features unix
+      run: cargo build --verbose ${{ matrix.features }}
+      
     - name: Run tests
-      run: cargo test --verbose --features unix
+      run: cargo test --verbose ${{ matrix.features }}
