@@ -22,6 +22,8 @@ ifeq ($(OS),Windows_NT)
 	@echo "Installing Windows dependencies..."
 	@where rustc >nul 2>nul || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 	@where gcc >nul 2>nul || choco install -y mingw
+	@echo "Adding Rust targets..."
+	@rustup target add x86_64-pc-windows-gnu x86_64-unknown-linux-gnu aarch64-apple-darwin
 else ifeq ($(UNAME_S),Darwin)
 	@echo "Installing macOS dependencies..."
 	@which brew >/dev/null || /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -36,9 +38,9 @@ else
 		. $$HOME/.cargo/env; \
 	}
 	@which x86_64-w64-mingw32-gcc >/dev/null || sudo apt install -y mingw-w64
-endif
 	@echo "Adding Rust targets..."
 	@. $$HOME/.cargo/env && rustup target add x86_64-pc-windows-gnu x86_64-unknown-linux-gnu aarch64-apple-darwin
+endif
 
 linux:
 	@echo "Building for Linux..."
