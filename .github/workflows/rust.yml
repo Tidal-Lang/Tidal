@@ -39,5 +39,14 @@ jobs:
     - name: Build
       run: cargo build --verbose ${{ matrix.features }}
       
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: tidal-${{ matrix.os }}
+        path: |
+          target/debug/tidal*
+          !target/debug/tidal.d
+        if-no-files-found: error
+        
     - name: Run tests
       run: cargo test --verbose ${{ matrix.features }}

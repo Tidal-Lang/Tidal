@@ -11,6 +11,7 @@ fn main() {
     let wiki_pages = [
         // vec of all docs on wiki
         ("Home", "https://raw.githubusercontent.com/wiki/Tidal-Lang/Tidal/Home.md"),
+        ("Get Started", "https://raw.githubusercontent.com/wiki/Tidal-Lang/Tidal/Get-Started.md"),
         ("Brain Rot Mode", "https://raw.githubusercontent.com/wiki/Tidal-Lang/Tidal/Brain-Rot-Mode-☠%EF%B8%8F.md"),
         ("Control Flow", "https://raw.githubusercontent.com/wiki/Tidal-Lang/Tidal/Control-Flow.md"),
         ("Data Types", "https://raw.githubusercontent.com/wiki/Tidal-Lang/Tidal/Data-Types.md"),

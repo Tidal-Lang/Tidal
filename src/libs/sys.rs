@@ -7,6 +7,7 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
 #[cfg(target_family = "unix")]
+#[allow(unused_imports)]
 use sys_info;
 
 pub struct SysLib {
