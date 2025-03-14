@@ -44,8 +44,8 @@ jobs:
       with:
         name: tidal-${{ matrix.os }}
         path: |
-          ${{ matrix.os == 'windows-latest' && 'target/x86_64-pc-windows-gnu/debug/tidal*' || 'target/x86_64-unknown-linux-gnu/debug/tidal*' }}
-          ${{ matrix.os == 'windows-latest' && '!target/x86_64-pc-windows-gnu/debug/tidal.d' || '!target/x86_64-unknown-linux-gnu/debug/tidal.d' }}
+          ${{ matrix.os == 'windows-latest' && 'target/x86_64-pc-windows-gnu/debug/td.exe' || 'target/x86_64-unknown-linux-gnu/debug/td' }}
+          !${{ matrix.os == 'windows-latest' && 'target/x86_64-pc-windows-gnu/debug/td.d' || 'target/x86_64-unknown-linux-gnu/debug/td.d' }}
         if-no-files-found: error
         
     - name: Run tests
