@@ -37,7 +37,10 @@ sudo make install
 ```
 
 ### Building
-- Build for current platform (simplest): `make`
+- Build for current platform (simplest): 
+  ```bash
+  make
+  ```
 - Build for specific platform:
   - Linux: `make linux`
   - Windows: `make windows`
@@ -47,7 +50,7 @@ sudo make install
 
 ### Running (LINUX/WSL ONLY)
 ```bash
-./td
+./td <FILENAME>.td
 ```
 
 ### Testing

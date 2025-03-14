@@ -11,23 +11,45 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            target: linux
+          - os: macos-latest
+            target: macos
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v4
     
     - name: Install Dependencies
+      if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt update
         sudo apt install -y mingw-w64
+        
+    - name: Install Dependencies (macOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install mingw-w64
         
     - name: Install Rust Dependencies
       run: make install
         
     - name: Build All Platforms
-      run: make build-all
+      run: |
+        if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+          make linux
+          make windows
+        else
+          make macos
+        fi
       
     - name: Upload Linux Binary
+      if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v4
       with:
         name: tidal-linux
@@ -35,10 +57,19 @@ jobs:
         if-no-files-found: error
         
     - name: Upload Windows Binary
+      if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v4
       with:
         name: tidal-windows
         path: target/x86_64-pc-windows-gnu/release/td.exe
+        if-no-files-found: error
+        
+    - name: Upload macOS Binary
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: tidal-macos
+        path: target/aarch64-apple-darwin/release/td
         if-no-files-found: error
         
     - name: Run Tests
