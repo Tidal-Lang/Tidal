@@ -28,7 +28,7 @@ else ifeq ($(UNAME_S),Darwin)
 	@echo "Installing macOS dependencies..."
 	@which brew >/dev/null || /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	@which rustc >/dev/null || brew install rust
-	@which x86_64-w64-mingw32-gcc >/dev/null || brew install mingw-w64
+	@which gcc >/dev/null || brew install gcc
 else
 	@echo "Installing Linux dependencies..."
 	@sudo apt update

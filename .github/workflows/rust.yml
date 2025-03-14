@@ -37,7 +37,7 @@ jobs:
         
     - name: Install Dependencies (macOS)
       if: matrix.os == 'macos-latest'
-      run: brew install gcc
+      run: which gcc >/dev/null || brew install gcc
         
     - name: Install Rust Dependencies (Universal)
       run: make install

@@ -1,5 +1,5 @@
 # Tidal
-https://tidal.pranavv.site
+https://tidal.pranavv.co.in
 
 <img src="logo/banner.jpeg" height="200px">  <img src="logo/logo.jpeg" height="200px"><br>
 <i>PS, I have just changed the Name of the Programming Language from `Blue Lagoon` to `Tidal`, so, if you see Blue Lagoon written anywhere, just know, it was the old name of the Language!</i>
