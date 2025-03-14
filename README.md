@@ -44,7 +44,8 @@ sudo make install
 - Build for specific platform:
   - Linux: `make linux`
   - Windows: `make windows`
-  - macOS: `make macos` (requires macOS)
+  - macOS (ARM64/M1/M2): `make macos-arm`
+  - macOS (Intel/x86_64): `make macos-x86`
 - Build for all platforms: `make build-all`
 - Clean build files: `make clean`
 

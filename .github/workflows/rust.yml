@@ -13,14 +13,15 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: ubuntu-latest
             target: linux
           - os: windows-latest
             target: windows
+          - os: macos-13
+            target: macos-x86
           - os: macos-latest
-            target: macos
+            target: macos-arm
 
     runs-on: ${{ matrix.os }}
 
@@ -36,7 +37,7 @@ jobs:
       run: choco install -y mingw
         
     - name: Install Dependencies (macOS)
-      if: matrix.os == 'macos-latest'
+      if: contains(matrix.os, 'macos')
       run: which gcc >/dev/null || brew install gcc
         
     - name: Install Rust Dependencies (Universal)
@@ -50,7 +51,7 @@ jobs:
       with:
         name: tidal-${{ matrix.target }}
         path: |
-          target/${{ matrix.os == 'ubuntu-latest' && 'x86_64-unknown-linux-gnu' || matrix.os == 'windows-latest' && 'x86_64-pc-windows-gnu' || 'aarch64-apple-darwin' }}/release/td${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+          target/${{ contains(matrix.target, 'macos') && (matrix.target == 'macos-arm' && 'aarch64-apple-darwin' || 'x86_64-apple-darwin') || matrix.os == 'ubuntu-latest' && 'x86_64-unknown-linux-gnu' || 'x86_64-pc-windows-gnu' }}/release/td${{ matrix.os == 'windows-latest' && '.exe' || '' }}
         if-no-files-found: error
         
     - name: Run Tests
