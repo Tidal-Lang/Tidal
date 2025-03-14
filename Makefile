@@ -20,8 +20,7 @@ install:
 	@echo "Installing dependencies..."
 ifeq ($(OS),Windows_NT)
 	@echo "Installing Windows dependencies..."
-	@where choco >nul 2>nul || @echo "Please install Chocolatey first: https://chocolatey.org/install"
-	@where rustc >nul 2>nul || choco install -y rust
+	@where rustc >nul 2>nul || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 	@where gcc >nul 2>nul || choco install -y mingw
 else ifeq ($(UNAME_S),Darwin)
 	@echo "Installing macOS dependencies..."
@@ -39,7 +38,7 @@ else
 	@which x86_64-w64-mingw32-gcc >/dev/null || sudo apt install -y mingw-w64
 endif
 	@echo "Adding Rust targets..."
-	@. $$HOME/.cargo/env && rustup target add x86_64-unknown-linux-gnu x86_64-pc-windows-gnu aarch64-apple-darwin
+	@. $$HOME/.cargo/env && rustup target add x86_64-pc-windows-gnu x86_64-unknown-linux-gnu aarch64-apple-darwin
 
 linux:
 	@echo "Building for Linux..."

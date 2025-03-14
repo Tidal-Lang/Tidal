@@ -13,10 +13,12 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: ubuntu-latest
             target: linux
+          - os: windows-latest
+            target: windows
           - os: macos-latest
             target: macos
 
@@ -25,51 +27,30 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Install Dependencies
+    - name: Install Dependencies (Ubuntu)
       if: matrix.os == 'ubuntu-latest'
-      run: |
-        sudo apt update
-        sudo apt install -y mingw-w64
+      run: sudo apt update
+        
+    - name: Install Dependencies (Windows)
+      if: matrix.os == 'windows-latest'
+      run: choco install -y mingw
         
     - name: Install Dependencies (macOS)
       if: matrix.os == 'macos-latest'
-      run: |
-        brew install mingw-w64
+      run: brew install gcc
         
-    - name: Install Rust Dependencies
+    - name: Install Rust Dependencies (Universal)
       run: make install
         
-    - name: Build All Platforms
-      run: |
-        if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-          make linux
-          make windows
-        else
-          make macos
-        fi
+    - name: Build Platform Binary
+      run: make ${{ matrix.target }}
       
-    - name: Upload Linux Binary
-      if: matrix.os == 'ubuntu-latest'
+    - name: Upload Binary
       uses: actions/upload-artifact@v4
       with:
-        name: tidal-linux
-        path: target/x86_64-unknown-linux-gnu/release/td
-        if-no-files-found: error
-        
-    - name: Upload Windows Binary
-      if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v4
-      with:
-        name: tidal-windows
-        path: target/x86_64-pc-windows-gnu/release/td.exe
-        if-no-files-found: error
-        
-    - name: Upload macOS Binary
-      if: matrix.os == 'macos-latest'
-      uses: actions/upload-artifact@v4
-      with:
-        name: tidal-macos
-        path: target/aarch64-apple-darwin/release/td
+        name: tidal-${{ matrix.target }}
+        path: |
+          target/${{ matrix.os == 'ubuntu-latest' && 'x86_64-unknown-linux-gnu' || matrix.os == 'windows-latest' && 'x86_64-pc-windows-gnu' || 'aarch64-apple-darwin' }}/release/td${{ matrix.os == 'windows-latest' && '.exe' || '' }}
         if-no-files-found: error
         
     - name: Run Tests
