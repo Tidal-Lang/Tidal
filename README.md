@@ -31,33 +31,29 @@ The Sample Code Along with the Basic Syntax Can be Found in the [Code Examples](
 ## Development (Linux or WSL)
 
 ### Dependencies
-- Rust
-- Cargo Toolchain (For Windows, Linux, and MacOS)
-
-Install all dependencies with these commands:
+Install all required dependencies with:
 ```bash
-chmod +x scripts/install.sh
-./scripts/install.sh
+sudo make install
 ```
 
-### Compile
-For all platforms (from Linux):
+### Building
+- Build for current platform (simplest): `make`
+- Build for specific platform:
+  - Linux: `make linux`
+  - Windows: `make windows`
+  - macOS: `make macos` (requires macOS)
+- Build for all platforms: `make build-all`
+- Clean build files: `make clean`
+
+### Running (LINUX/WSL ONLY)
 ```bash
-chmod +x scripts/build-all.sh
-./scripts/build-all.sh
+./td
 ```
 
-**Note:** Cross-compilation for macOS requires building on macOS directly due to SDK requirements. To Build Anyway, Use the Following Command:
+### Testing
 ```bash
-BUILD_MACOS=true ./scripts/build-all.sh
+make test
 ```
-
-### Run
-```./td <FILENAME.td>```
-
-OR 
-
-```./td <FILENAME.br>```
 
 For a Detailed Guide, Please Check out the [For Developers](https://github.com/Tidal-Lang/Tidal/wiki/For-Developers) Page.
 

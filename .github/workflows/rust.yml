@@ -11,42 +11,32 @@ env:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            features: --features unix
-            target: x86_64-unknown-linux-gnu
-          - os: windows-latest
-            features: --features windows
-            target: x86_64-pc-windows-gnu
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
     
-    - name: Install Windows Dependencies
-      if: matrix.os == 'windows-latest'
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: mingw64
-        update: true
-        install: mingw-w64-x86_64-gcc
-    
-    - name: Clean
-      run: cargo clean
+    - name: Install Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y mingw-w64
+        
+    - name: Build All Platforms
+      run: make build-all
       
-    - name: Build
-      run: cargo build --release --verbose ${{ matrix.features }} --target ${{ matrix.target }}
-      
-    - name: Upload artifacts
+    - name: Upload Linux Binary
       uses: actions/upload-artifact@v4
       with:
-        name: tidal-${{ matrix.os }}
-        path: target/${{ matrix.target }}/release/td${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+        name: tidal-linux
+        path: target/x86_64-unknown-linux-gnu/release/td
         if-no-files-found: error
         
-    - name: Run tests
-      run: cargo test --verbose ${{ matrix.features }} --target ${{ matrix.target }}
+    - name: Upload Windows Binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: tidal-windows
+        path: target/x86_64-pc-windows-gnu/release/td.exe
+        if-no-files-found: error
+        
+    - name: Run Tests
+      run: make test
