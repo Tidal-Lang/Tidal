@@ -40,7 +40,7 @@ jobs:
       run: cargo build --verbose ${{ matrix.features }}
       
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: tidal-${{ matrix.os }}
         path: |
