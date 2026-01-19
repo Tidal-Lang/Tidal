@@ -18,8 +18,6 @@ jobs:
             target: linux
           - os: windows-latest
             target: windows
-          - os: macos-15-large
-            target: macos-x86
           - os: macos-latest
             target: macos-arm
 
