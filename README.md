@@ -1,5 +1,4 @@
 # Tidal
-https://tidal.pranavv.co.in
 
 <img src="logo/banner.jpeg" height="200px">  <img src="logo/logo.jpeg" height="200px"><br>
 <i>PS, I have just changed the Name of the Programming Language from `Blue Lagoon` to `Tidal`, so, if you see Blue Lagoon written anywhere, just know, it was the old name of the Language!</i>
@@ -8,7 +7,7 @@ A Language Made using Rust. <br>
 Made by Pranav Verma.
 
 ## Download
-The Latest Compiled Build Can Be Found in the [Releases](https://github.com/PranavVerma-droid/Blue-Lagoon/releases) (For Windows and Linux)
+The Latest Compiled Build Can Be Found in the [Releases](https://github.com/Tidal-Lang/Tidal/releases) (For Windows and Linux)
 
 ## File Extensions
 - `.td`: Tidal source files.
